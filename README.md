@@ -1,0 +1,2 @@
+# dwm
+my first rice 
