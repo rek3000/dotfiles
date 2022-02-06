@@ -3,7 +3,6 @@
 export PATH="${PATH}:$HOME/bin"
 rsblocks &
 nitrogen --restore &
-ibus-daemon
-ibus restart
+ibus-daemon -drxR
 xbindkeys &
 picom &
