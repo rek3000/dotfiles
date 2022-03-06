@@ -1,22 +1,22 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int gappx     = 5;        /* gaps between windows */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int snap      = 15;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Hack Regular Nerd Font Complete:size=12" };
-static const char dmenufont[]       = "Hack Regular Nerd Font Complete:size=12";
+static const char *fonts[]          = { "PTSans-Regular:size=12" };// { "Hack Nerd Font Mono:size=12" };
+static const char dmenufont[]       = "PTSans-Regular:size=12";
 static const char col_gray1[]       = "#2e3440";
-static const char col_gray2[]       = "#434c5e";
+static const char col_gray2[]       = "#4c3f37"; //"#434c5e";
 static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#81a1c1";
+static const char col_gray4[]       = "#ffe4fd";  //"#eeeeee";
+static const char col_cyan[]        = "#7777ac";// "#7777ac"; "#81a1c1";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -24,7 +24,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "✿", "✿", "✿", "✿", "✿", "✿"}; 
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -75,10 +75,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-        { MODKEY|ShiftMask,             XK_r,      resetlayout,    {0} },
+    { MODKEY|ShiftMask,             XK_r,      resetlayout,    {0} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,	                XK_c,      killclient,     {0} },
+	{ MODKEY,	                    XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
