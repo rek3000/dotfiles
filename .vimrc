@@ -7,7 +7,6 @@ set number
 set encoding=UTF-8
 call plug#begin('~/.vim/plugged')
 
-Plug 'Valloric/YouCompleteMe'
 Plug 'racer-rust/vim-racer'
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-airline/vim-airline'
@@ -20,9 +19,15 @@ Plug 'dense-analysis/ale'
 Plug 'rust-lang/rust.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'jiangmiao/auto-pairs'
-
+Plug 'luochen1990/rainbow'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 
 colorscheme nord
+highlight Visual cterm=reverse ctermbg=NONE
+
 let g:rustfmt_autosave = 1
+map <F2> :NERDTreeToggle<CR>
+
+let g:rainbow_active = 1

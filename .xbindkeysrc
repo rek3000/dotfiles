@@ -56,39 +56,64 @@
     Mod2+Mod4 + F11 
 
 #FnIncVolume
-"amixer sset Master 5+"
-    m:0x10 + c:123
-    Mod2 + XF86AudioRaiseVolume 
+"pamixer -i 2"
+    m:0x0 + c:123
+    XF86AudioRaiseVolume 
 
 #NorIncVolume
-"amixer sset Master 5+"
-    m:0x50 + c:69
-    Mod2+Mod4 + F3 
+"pamixer -i 2"
+    m:0x40 + c:69
+    Mod4 + F3 
 
 #FnDecVolume
-"amixer sset Master 5-"
-    m:0x10 + c:122
-    Mod2 + XF86AudioLowerVolume 
+"pamixer -d 2"
+    m:0x0 + c:122
+    XF86AudioLowerVolume 
 
 #NorDecVolume
-"amixer sset Master 5-"
-    m:0x50 + c:68
-    Mod2+Mod4 + F2 
+"pamixer -d 2"
+    m:0x40 + c:68
+    Mod4 + F2 
 
 #FnToggleVolume
-"amixer -q -D pulse sset Master toggle"
-    m:0x10 + c:121
-    Mod2 + XF86AudioMute 
+"pamixer -t"
+    m:0x0 + c:121
+    XF86AudioMute 
 
 #NorToggleVolume
-"amixer -q -D pulse sset Master toggle"
-    m:0x50 + c:67
-    Mod2+Mod4 + F1 
+"pamixer -t"
+    m:0x40 + c:67
+    Mod4 + F1 
 
-#screenshot
+#PrintScr
 "scmenu"
     m:0x0 + c:107
     Print 
+
+#switch_audio
+"saudio"
+    m:0x40 + c:75
+    Mod4 + F9 
+
+#rofi
+"rofi -show run"
+    m:0x40 + c:42
+    Mod4 + g 
+
+#Suspend
+"prompt.sh Do\ you\ want\ to\ suspend? systemctl\ suspend"
+    m:0x44 + c:119
+    Control+Mod4 + Delete 
+
+#Reboot
+"prompt.sh Do\ you\ want\ to\ reboot? reboot"
+    m:0x44 + c:110
+    Control+Mod4 + Home 
+
+#Shutdown
+"prompt.sh Do\ you\ want\ to\ poweroff? poweroff"
+    m:0x44 + c:115
+    Control+Mod4 + End 
 
 #
 # End of xbindkeys configuration
