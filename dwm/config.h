@@ -1,17 +1,17 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int gappx     = 5;        /* gaps between windows */
 static const unsigned int snap      = 15;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayspacing = 2;   /* systray spacing */
+static const unsigned int systrayspacing = 3;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Hack Bold Nerd Font Complete:size=12" };
-static const char dmenufont[]       = "Hack Bold Nerd Font Complete:size=12";
+static const int topbar             = 0;        /* 0 means bottom bar */
+static const char *fonts[]          = { "DejaVuSans:size=13", "openmoji:pixelsize=16:antialias=true:autohint=true" };
+static const char dmenufont[]       = "DejaVuSans:size=13";
 //PTSans-Regular:
 #include "/home/rek/.cache/wal/colors-wal-dwm.h"
 /* tagging */
@@ -52,8 +52,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-//static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb" };
-static const char *dmenucmd[] = { "dmen.sh" }; 
+static const char *dmenucmd[] = { "dmenu_run" }; 
 static const char *termcmd[]  = { "kitty", NULL };
 
 static Key keys[] = {
@@ -67,10 +66,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-    { MODKEY|ShiftMask,             XK_r,      resetlayout,    {0} },
+    	{ MODKEY|ShiftMask,             XK_r,      resetlayout,    {0} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,	                    XK_c,      killclient,     {0} },
+	{ MODKEY,	                XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
