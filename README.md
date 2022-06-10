@@ -1,6 +1,6 @@
 # dwm
 my rice \
-DWM with systray,fullgaps and autostart patches
+DWM with systray, fullgaps, and autostart patches
 ![alt text](rice4.png)
 
 I don't know the author of the wallpaper, so contact me for crediting. Thanks!
