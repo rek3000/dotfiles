@@ -1,7 +1,7 @@
 # dwm
 my rice \
 DWM with systray, fullgaps, and autostart patches
-TERM: kitty
+TERM: alacritty
 System: Artix Linux
 ![alt text](rice4.png)
 
