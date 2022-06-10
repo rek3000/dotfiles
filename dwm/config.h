@@ -10,8 +10,8 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 0;        /* 0 means bottom bar */
-static const char *fonts[]          = { "DejaVuSans:size=13", "openmoji:pixelsize=16:antialias=true:autohint=true" };
-static const char dmenufont[]       = "DejaVuSans:size=13";
+static const char *fonts[]          = { "VCR OSD Mono:size=13", "openmoji:pixelsize=16:antialias=true:autohint=true" };
+static const char dmenufont[]       = "VCR OSD Mono:size=13";
 //PTSans-Regular:
 #include "/home/rek/.cache/wal/colors-wal-dwm.h"
 /* tagging */
