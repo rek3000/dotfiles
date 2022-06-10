@@ -1,0 +1,27 @@
+XF86AudioRaiseVolume
+	pamixer -i 5 && sigdwmblocks 1
+XF86AudioLowerVolume
+	pamixer -d 5 && sigdwmblocks 1
+XF86AudioMute
+	pamixer -t   && sigdwmblocks 1
+
+XF86MonBrightnessDown
+	light -U 10
+mod4 + F11
+	light -U 10
+XF86MonBrightnessUp
+	light -A 10
+mod4 + F12
+	light -A 10
+
+mod4 + g
+	rofi -show run
+
+mod4 + Home
+	rofi -show p -modi p:rofi-power-menu
+
+Print
+	spectacle -b -c
+
+mod4 + F9
+	saudio && sigdwmblocks 1
