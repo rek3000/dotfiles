@@ -1,0 +1,130 @@
+# AUDIO
+#
+#
+media-video/pipewire v4l pipewire-alsa gstreamer udev sound-server 
+media-sound/pulseaudio -daemon
+
+
+# FEH 
+media-gfx/feh curl exif inotify xinerama
+media-libs/imlib2 svg
+media-libs/tiff jpeg webp
+
+# thunar
+gnome-base/gvfs fuse archive bluray elogind mtp udisks
+xfce-base/thunar libnotify udisks
+sys-fs/udisks elogind
+dev-libs/libdbusmenu gtk3
+
+
+sys-fs/mtpfs mad
+x11-libs/libfm udisks
+
+
+net-im/discord-bin ~amd64
+
+#Discord
+app-text/ghostscript-gpl cups
+app-text/xmlto text
+
+# fcitx
+app-i18n/fcitx autostart cairo gtk3 gtk2 introspection lua nls pango 
+
+net-misc/connman policykit iwd
+
+# virt-manager
+app-emulation/qemu usbredir spice
+# required by app-emulation/virt-manager-4.0.0::gentoo[-test,gtk]
+# required by app-emulation/virt-manager (argument)
+>=net-misc/spice-gtk-0.41 usbredir
+# required by app-emulation/libvirt-8.5.0::gentoo[virt-network]
+# required by app-emulation/libvirt-glib-4.0.0::gentoo
+# required by app-emulation/virt-manager-4.0.0::gentoo[-test]
+# required by app-emulation/virt-manager (argument)
+>=net-dns/dnsmasq-2.86 script
+
+app-emulation/virt-manager policykit gtk
+app-emulation/libvirt policykit
+
+net-misc/networkmanager -bluetooth -modemmanager nss policykit wifi nftables audit
+
+# display manager 
+x11-misc/sddm elogind 
+
+dev-lang/rust nightly
+
+x11-misc/polybar network url mpd pulseaudio doc
+
+x11-drivers/xf86-video-intel sna tools uxa xvmc
+
+x11-misc/picom config-file dbus doc drm opengl pcre
+
+media-gfx/imagemagick  cxx fftw fontconfig graphviz jbig jpeg jpeg2k lcms lzma openexr openmp perl png postscript raw static-libs svg tiff truetype webp wmf corefonts xml
+ 
+# required by media-gfx/graphviz-5.0.0::gentoo
+# required by media-gfx/imagemagick-7.1.0.44::gentoo[graphviz]
+# required by media-gfx/imagemagick (argument)
+>=media-libs/gd-2.3.3-r1 truetype fontconfig
+
+#sddm theming
+dev-qt/qtmultimedia alsa gstreamer qml widgets
+dev-qt/qtquickcontrols quickcontrols
+media-libs/phonon gstreamer 
+
+
+x11-misc/rofi drun windowmode
+# required by media-libs/phonon-gstreamer-4.10.0::gentoo
+# required by media-libs/phonon-4.11.1-r2::gentoo[gstreamer]
+# required by media-libs/phonon (argument)
+>=media-plugins/gst-plugins-meta-1.20.2 vorbis ogg
+# required by media-libs/phonon-vlc-0.11.3-r1::gentoo
+# required by media-libs/phonon-4.11.1-r2::gentoo[vlc]
+# required by @selected
+# required by @world (argument)
+>=media-video/vlc-3.0.17.4 ogg
+# required by media-video/vlc-3.0.17.4::gentoo
+# required by media-libs/phonon-vlc-0.11.3-r1::gentoo
+# required by media-libs/phonon-4.11.1-r2::gentoo[vlc]
+# required by @selected
+# required by @world (argument)
+>=sys-libs/zlib-1.2.12-r2 minizip
+
+x11-misc/lightdm audit gtk -gnome non-root vala introspection gt5
+dev-qt/qtquickcontrols2 widgets
+
+dev-qt/qtgui  accessibility dbus gif jpeg png udev
+
+media-libs/libsdl2 -gles1 
+#xinerama vulkan joystick kms pipewire sound video gles2  -gles1 oss 
+#
+app-misc/tmux vim-syntax utemper 
+# required by app-office/libreoffice-bin-7.3.4.2::gentoo
+# required by app-office/libreoffice-bin (argument)
+>=media-libs/harfbuzz-5.1.0 icu
+# required by app-office/libreoffice-bin-7.3.4.2::gentoo
+# required by app-office/libreoffice-bin (argument)
+>=dev-libs/xmlsec-1.2.34 nss
+
+
+# openbox
+x11-wm/openbox imlib nls session startup-notification svg xdg 
+
+media-video/ffmpegthumbnailer  png jpeg 
+media-video/ffmpeg v4l 
+
+
+#pdf viewer
+app-text/zathura doc magic seccomp synctex sqlite
+app-text/zathura-meta cb djvu pdf postscript
+# required by app-text/zathura-pdf-poppler-0.3.0::gentoo
+# required by app-text/zathura-meta-0::gentoo[pdf]
+# required by app-text/zathura-meta (argument)
+>=app-text/poppler-22.07.0 cairo
+
+media-video/mpv bluray cli dvd jpeg lua drm egl gdm libmpv mmal opengl pipewire vulkan 
+# required by media-video/cheese-41.1::gentoo
+# required by media-video/cheese (argument)
+>=x11-libs/gdk-pixbuf-2.42.8 jpeg
+# required by media-video/cheese-41.1::gentoo
+# required by media-video/cheese (argument)
+>=media-libs/gst-plugins-base-1.20.2 theora
