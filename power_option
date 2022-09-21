@@ -1,0 +1,38 @@
+#!/bin/sh
+
+selection="$(echo -e "Shutdown\nReboot\nSleep\nLogout" | dmenu -i -p Power: -l 4)"
+
+case $selection in
+  "Shutdown")
+    if [[ $(echo -e "No\nYes" | dmenu -p Power: -l 2) == "Yes" ]]
+    then
+      loginctl poweroff
+    else break 
+    fi
+  ;;
+  "Reboot")
+      if [[ $(echo -e "No\nYes" | dmenu -p Power: -l 2) == "Yes" ]]
+    then
+      loginctl reboot
+    else break
+    fi
+  ;;
+  "Sleep")
+    if [[ $(echo -e "No\nYes" | dmenu -p Power: -l 2) == "Yes" ]]
+    then
+      loginctl suspend
+    else break
+    fi
+  ;;
+  "Logout")
+    wm=echo $DESKTOP_SESSION | tail -c $(expr length $DESKTOP_SESSION - 20)
+    if [[ $(echo -e "No\nYes" | dmenu -p Power: -l 2) == "Yes" ]]
+    then
+      pkill "$wm"
+    else break
+    fi
+  ;;
+  *) echo "nah"
+  ;;
+esac
+
