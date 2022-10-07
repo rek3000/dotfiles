@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 0;        /* border pixel of windows */
+static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int gappx     = 5;        /* gaps between windows */
 static const unsigned int snap      = 15;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
@@ -9,13 +9,13 @@ static const unsigned int systrayspacing = 3;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 0;        /* 0 means bottom bar */
-static const char *fonts[]          = { "VCR OSD Mono:size=13", "openmoji:pixelsize=16:antialias=true:autohint=true" };
-static const char dmenufont[]       = "VCR OSD Mono:size=13";
+static const int topbar             = 1;        /* 0 means bottom bar */
+static const char *fonts[]          = { "Iosevka:size=12", "Material Design Icons Desktop:pixelsize=16" };
+static const char dmenufont[]       = "Iosevka:size=12";
 //PTSans-Regular:
 #include "/home/rek/.cache/wal/colors-wal-dwm.h"
 /* tagging */
-static const char *tags[] = { "✿", "✿", "✿", "✿", "✿", "✿"}; 
+static const char *tags[] = {"", "", "", "", "", ""}; 
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -52,8 +52,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run" }; 
-static const char *termcmd[]  = { "kitty", NULL };
+static const char *dmenucmd[] = { "/home/rek/.local/bin/dmen.sh" }; 
+static const char *termcmd[]  = { "alacritty", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
