@@ -1,0 +1,83 @@
+#
+# wm independent hotkeys
+#
+
+# terminal emulator
+super + Return
+	alacritty
+
+# program launcher
+super + d
+	dmenu_run
+
+# make sxhkd reload its configuration files:
+super + Escape
+	pkill -USR1 -x sxhkd
+
+#
+# berry hotkeys
+#
+
+super + {h, j, k, l}
+    berryc window_move {-50 0, 0 50, 0 -50, 50 0}
+
+super + shift +  {h, j, k, l}
+    berryc window_resize {-50 0, 0 50, 0 -50, 50 0}
+
+super + {1-6}
+    berryc switch_workspace {0-5}
+
+super + shift + {1-6}
+    berryc send_to_workspace {0-5}
+
+super + m
+    berryc window_monocle
+
+super + f
+    berryc fullscreen
+
+super +  p
+    berryc snap_right
+
+super + o 
+    berryc snap_left
+
+super + n
+    berryc toggle_decorations
+
+super + Tab
+    berryc cycle_focus
+
+super + shift + c
+    berryc window_close
+
+super + space
+    berryc window_center
+
+~button1
+    berryc pointer_focus
+super + shift + q
+	berryc quit
+
+mod4 + F9
+	saudio
+
+XF86AudioLowerVolume
+	pamixer -d 2
+XF86AudioRaiseVolume
+	pamixer -i 2
+XF86AudioMute
+	pamixer -t
+
+mod4 + F11
+	light -U 10
+mod4 + F12
+	light -A 10
+
+XF86MonBrightnessDown
+	light -U 10
+XF86MonBrightnessUp
+	light -A 10
+
+Print
+	maim | xclip -selection clipboard -t image/png
