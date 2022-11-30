@@ -109,6 +109,14 @@ keys = [
     Key([mod], "F11", lazy.spawn("light -U 10"), desc=""),
     Key([mod], "F12", lazy.spawn("light -A 10"), desc=""),
 
+    Key([], "Print",
+        lazy.spawn("screen"),
+        desc="Print Screen"),
+    Key(["shift"], "Print",
+        lazy.spawn("screensel"),
+        desc="Print selected Screen"),
+
+
 ]
 
 groups = [Group(i) for i in "123456789"]
@@ -140,11 +148,27 @@ for i in groups:
 layouts = [
     #layout.Tile(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
     layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"],
-                   border_width=2,
+                   border_width=5,
                    border_focus="#68b984",
                    border_normal="#3d5656",
-                   margin=3),
-    layout.Max(margin=3),
+                   margin=3,
+                   border_on_single=True),
+    #layout.Max(margin=3),
+    layout.Floating(
+        float_rules=[
+            # Run the utility of `xprop` to see the wm class and name of an X client.
+            *layout.Floating.default_float_rules,
+            Match(wm_class="confirmreset"),  # gitk
+            Match(wm_class="makebranch"),  # gitk
+            Match(wm_class="maketag"),  # gitk
+            Match(wm_class="ssh-askpass"),  # ssh-askpass
+            Match(title="branchdialog"),  # gitk
+            Match(title="pinentry"),  # GPG key password entry
+        ],
+        border_width=5,
+        border_focus="#68b984",
+        border_normal="#3d5656",
+    ),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -172,9 +196,10 @@ screens = [
                 widget.GroupBox(highlight_method="block",
                                 borderwidth=0,
                                 this_current_screen_border="#68B984"),
-                widget.CurrentLayout(foreground="#68b984"),
+                widget.CurrentLayout(background="#68b984"),
                 widget.Prompt(background="#DBA39A"),
-                widget.WindowName(max_chars=70),
+                widget.WindowName(max_chars=70,
+                                  padding=20),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
@@ -196,7 +221,8 @@ screens = [
                                fontsize=widget_defaults.get("fontsize")+2),
                 #widget.QuickExit(),
             ],
-            24,
+            25,
+            background="#222222",
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
@@ -225,7 +251,10 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
-    ]
+    ],
+    border_width=5,
+    border_focus="#68b984",
+    border_normal="#3d5656",
 )
 auto_fullscreen = True
 focus_on_window_activation = "smart"
