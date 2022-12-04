@@ -1,14 +1,16 @@
 #!/bin/bash
-# this script change the output of the audio between headphones and internal speaker
+
+# REDIRECT THE AUDIO OUTPUT TO HEADPHONE OR INTERNAL SPEAKER
+
 sink=""
 active="$(pactl list sinks | grep State | head -n 1 | awk '{print $2}' )"
 
 if [[ $active  == "RUNNING" ]] 
 then
-	sink="$(pactl list sinks | grep Sink\ # | awk '{print $2}' | cut -c 2-3 | head -n 1)"
+	sink="$(pactl list sinks | grep Sink\  | awk '{print $2}' | cut -c 2-3 | head -n 1)"
 	curr="$(pactl list sinks | grep Active | awk '{print $3}'| head -n 1)"
 else 
-	sink="$(pactl list sinks | grep Sink\ # | awk '{print $2}' | cut -c 2-3 | tail -n 1)"
+	sink="$(pactl list sinks | grep Sink\  | awk '{print $2}' | cut -c 2-3 | tail -n 1)"
 	curr="$(pactl list sinks | grep Active | awk '{print $3}'| tail -n 1)"
 fi
 
@@ -18,3 +20,4 @@ then
 else
 	pactl set-sink-port $sink analog-output-speaker
 fi
+
