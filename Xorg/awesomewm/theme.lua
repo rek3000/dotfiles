@@ -14,7 +14,7 @@ local theme = {}
 theme.font          = "Dina 10"
 
 theme.bg_normal     = "#222222"
-theme.bg_focus      = "#535d6c"
+theme.bg_focus      = "#68b984"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
@@ -25,9 +25,9 @@ theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
 theme.useless_gap   = dpi(4)
-theme.border_width  = dpi(2)
-theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
+theme.border_width  = dpi(5)
+theme.border_normal = "#3d5656"
+theme.border_focus  = "#68b984"
 theme.border_marked = "#91231c"
 
 -- There are other variable sets
@@ -44,7 +44,7 @@ theme.border_marked = "#91231c"
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
+local taglist_square_size = dpi(5)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_normal
 )
