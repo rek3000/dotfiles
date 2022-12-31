@@ -1,0 +1,3 @@
+#!/bin/sh 
+
+bemenu-run  -i -l 10 -p run --scrollbar autohide --cw 10 -H 30 -B 3 -M 500 -c

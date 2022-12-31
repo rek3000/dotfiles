@@ -1,0 +1,1 @@
+/home/rek/Source/swww/target/release/swww: /home/rek/Source/swww/build.rs /home/rek/Source/swww/src/cli.rs /home/rek/Source/swww/src/main.rs /home/rek/Source/swww/utils/src/communication.rs /home/rek/Source/swww/utils/src/comp_decomp.rs /home/rek/Source/swww/utils/src/lib.rs
