@@ -1,74 +1,62 @@
-* {
-  all: unset; //Unsets everything so you can style everything from scratch
-	font-family: DejaVuSansMono Nerd Font Mono;
+* { 
+	all: unset;
+	color: #DDDDDD;
+	font-family:  Iosevka Nerd Font;
 }
 
-//Global Styles
-.bar {
-  background-color: #3a3a3a;
-  color: #b0b4bc;
+window {
+	background-color: #3a3a3a;
+	font-size: 15px;
+	border: 1px solid #ABC270;
+	border-radius: 12px;
+	& > * {
+		margin: 4px;
+	}
+}
 
+.bar_part {
+}
+
+.top-bar {
+	margin-top: 10px;
+}
+
+.middle-bar {
+	margin: 10px 1px;
+
+}
+
+.bottom-bar {
+	margin-bottom: 10px;
+}
+
+.greet {
+	font-style: Italic;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.ram {
+	font-style: Italic;
+}
+
+.time {
+	padding: 8px 0px; 
+	font-size: 1.3rem;
+	background-color: #658864;
+	border: 0px solid #658864;
+	border-radius: 8px;
+}
+
+.workspace-entry  {
+	font-size: 1.3rem;
+}
+
+.workspace-entry.current{
+	font-size: 1.6rem;
+	background-color: #658864;
+	border: 0px solid #658864;
+	border-radius: 8px;
 	
-	border-image: linear-gradient(45deg, #3A8891, #b3ffae) 6;
-	// border-color: #b3ffae;
-	border-style: solid;
-	border-width: 4px;
-  // border-radius: 10px;
-	font-weight: bold;
-}
 
-// Styles on classes (see eww.yuck for more information)
-
-.sidestuff slider {
-  all: unset;
-  color: #ffd5cd;
-	margin: 5;
-}
-
-.metric scale trough highlight {
-  all: unset;
-  background-color: #D35D6E;
-  color: #000000;
-  // border-radius: 10px;
-}
-.metric scale trough {
-  all: unset;
-  background-color: #4e4e4e;
-  // border-radius: 50px;
-  min-height: 3px;
-  min-width: 50px;
-  margin-left: 10px;
-  margin-right: 20px;
-}
-.metric scale trough highlight {
-  all: unset;
-  background-color: #D35D6E;
-  color: #000000;
-  // border-radius: 10px;
-}
-.metric scale trough {
-  all: unset;
-  background-color: #4e4e4e;
-  // border-radius: 50px;
-  min-height: 3px;
-  min-width: 50px;
-  margin-left: 10px;
-  margin-right: 20px;
-}
-.label-ram {
-  font-size: large;
-}
-
-.workspaces button:hover {
-  color: #D35D6E;
-}
-
-.workspaces {
-	padding-left: 10px;
-}
-
-.sidestuff {
-	padding-right: 10px;
-	padding-top: 5px;
-	padding-bottom: 5px;
 }

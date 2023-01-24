@@ -19,10 +19,10 @@ berryc text_unfocus_color  eeeeee #eeeeee
 berryc smart_place "true"
 berryc draw_text   "false"
 berryc edge_lock   "true"
-berryc set_font    "agave regular Nerd Font Complete"
+berryc set_font    "Iosevka Nerd Font"
 berryc decorate_new "true"
 
 killall sxhkd
-sxhkd -c ~/.config/berry/sxhkdrc &
-~/.config/polybar/launch.sh &
-picom &
+# sxhkd -c ~/.config/berry/sxhkdrc &
+# ~/.config/polybar/launch.sh &
+# picom &
