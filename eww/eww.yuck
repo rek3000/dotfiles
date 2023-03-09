@@ -1,28 +1,32 @@
-(defwidget bar_part []
+(defwidget bar_part [mode]
   (centerbox 
-    :orientation "v"
+    :orientation mode
     :class "bar_part"
     (box :valign "start"
+         :halign "start"
          :class "top-bar"
-         :orientation "v"
+         :orientation mode
          :space-evenly false
       ; (greet)
-      (workspaces)
+      (workspaces :orient mode)
       )
     (box :valign "center"
+         :halign "center"
          :class "middle-bar"
-      (time)
+      (time :orient mode)
       )
     (box :valign "end"
+         :halign "end"
          :class "bottom-bar"
-      (ram))
+      (ram :orient mode))
     ))
 
-(defwidget time []
-  (box :class "time"
-       :orientation "v"
+(defwidget time [orient]
+  (box :class "time ${orient}" 
+       :orientation orient
+       :space-evenly false
     (label :text "${time.hour}")
-    (label :text "${time.min}")
+    (label :markup "${orient == "h" || orient == "horizontal" ? ":" : ""}${time.min}")
     ))
 
 (defwidget greet []
@@ -31,9 +35,9 @@
     (label :text "?")
     ))
 
-(defwidget ram []
+(defwidget ram [orient]
   (box :class "ram"
-    (label :angle 90 :text "this is a status bar")))
+    (label :angle {orient == "v" || orient == "horizontal" ? 90 : 0} :text "this is a status bar")))
 
 (defpoll time 
   :interval "5s"
@@ -47,22 +51,22 @@
 (deflisten current_workspace :initial "1" "bash ~/.config/eww/scripts/get-active-workspace")
 (defvar empty "◇")
 (defvar occupy "◆")
-(defwidget workspaces []
+(defwidget workspaces [orient]
   (eventbox :onscroll "bash ~/.config/eww/scripts/change-active-workspace {} ${current_workspace}" :class "workspaces-widget"
     (box :space-evenly true
-         :orientation "v"
+         :orientation orient
       (for workspace in workspaces
         (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}"
           (box :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
             ; (label :markup "${workspace.windows > 0 ? "◆" : "◇" }")
             (label :markup "${workspace.windows > 0 ? "${occupy}" : "${empty}"}")
+            
             )
           )
         )
       )
     )
   )
-
 
 
 (defwindow bar
@@ -76,7 +80,19 @@
     :anchor "left center")      
   :exclusive true
   :focusable false
+  ; :reserve (struts :side "top" :distance "4%")   
+  (bar_part :mode "v"))
+
+(defwindow bar2
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry :y "5px"
+    :x "0%"
+    :width "98%"
+    :height "10px"             
+    :windowtype "dock"
+    :anchor "top center")      
+  :exclusive true
+  :focusable false
   :reserve (struts :side "top" :distance "4%")   
-  (bar_part))
-
-
+  (bar_part :mode "h"))

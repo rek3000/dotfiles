@@ -7,7 +7,7 @@
 window {
 	background-color: #3a3a3a;
 	font-size: 15px;
-	border: 1px solid #ABC270;
+	border: 3px solid #F5BB95;
 	border-radius: 12px;
 	& > * {
 		margin: 4px;
@@ -40,11 +40,18 @@ window {
 	font-style: Italic;
 }
 
-.time {
+.time.h {
+	padding: 0px 8px; 
+	font-size: 1.3rem;
+	background-color: #658864;
+	// border: 0px solid #658864;
+	border-radius: 8px;
+}
+
+.time.v {
 	padding: 8px 0px; 
 	font-size: 1.3rem;
 	background-color: #658864;
-	border: 0px solid #658864;
 	border-radius: 8px;
 }
 
@@ -55,7 +62,6 @@ window {
 .workspace-entry.current{
 	font-size: 1.6rem;
 	background-color: #658864;
-	border: 0px solid #658864;
 	border-radius: 8px;
 	
 
