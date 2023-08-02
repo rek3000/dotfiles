@@ -1,32 +1,41 @@
 #!/bin/sh
 
-selection="$(echo -e "Shutdown\nReboot\nSleep\nLogout" | dmenu -i -p Power: -l 4)"
+# this allow to store command with parameter
+bemen=("bemenu" "-i" "-l" "12" "--scrollbar" "autohide" "--cw" "10" "-H" "30" "-B" "5" "-M" "500" "-c" "--bdr" "#3A8891" "--hf" "#3A8891" "--tf" "#3A8891" "--scf" "#3A8891" "--fn" "'Inconsolata Nerd Font 15px'")
+
+menu="${bemen[@]}"
+#menu=dmenu
+
+sys=systemctl
+selection="$(echo -e "Shutdown\nReboot\nSleep\nLogout" | $menu -i -p Power: -l 4)"
+
+#menu=dmenu
 
 case $selection in
   "Shutdown")
-    if [[ $(echo -e "No\nYes" | dmenu -p Power: -l 2) == "Yes" ]]
+    if [[ $(echo -e "No\nYes" | $menu -p Power: -l 2) == "Yes" ]]
     then
-      loginctl poweroff
+      $sys poweroff
     else break 
     fi
   ;;
   "Reboot")
-      if [[ $(echo -e "No\nYes" | dmenu -p Power: -l 2) == "Yes" ]]
+      if [[ $(echo -e "No\nYes" | $menu -p Power: -l 2) == "Yes" ]]
     then
-      loginctl reboot
+      $sys reboot
     else break
     fi
   ;;
   "Sleep")
-    if [[ $(echo -e "No\nYes" | dmenu -p Power: -l 2) == "Yes" ]]
+    if [[ $(echo -e "No\nYes" | $menu -p Power: -l 2) == "Yes" ]]
     then
-      loginctl suspend
+      $sys suspend
     else break
     fi
   ;;
   "Logout")
     wm=echo $DESKTOP_SESSION | tail -c $(expr length $DESKTOP_SESSION - 20)
-    if [[ $(echo -e "No\nYes" | dmenu -p Power: -l 2) == "Yes" ]]
+    if [[ $(echo -e "No\nYes" | $menu -p Power: -l 2) == "Yes" ]]
     then
       pkill "$wm"
     else break
