@@ -4,9 +4,9 @@
 bemen=("bemenu" "-i" "-l" "12" "--scrollbar" "autohide" "--cw" "10" "-H" "30" "-B" "5" "-M" "500" "-c" "--bdr" "#3A8891" "--hf" "#3A8891" "--tf" "#3A8891" "--scf" "#3A8891" "--fn" "'Inconsolata Nerd Font 15px'")
 
 menu="${bemen[@]}"
-#menu=dmenu
 
-sys=systemctl
+pidof systemd && sys=systemctl || sys=loginctl
+
 selection="$(echo -e "Shutdown\nReboot\nSleep\nLogout" | $menu -i -p Power: -l 4)"
 
 #menu=dmenu

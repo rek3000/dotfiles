@@ -2,24 +2,35 @@
   (centerbox 
     :orientation mode
     :class "bar_part"
-    (box :valign "start"
+    (box :valign "center"
          :halign "start"
-         :class "top-bar"
+         :class "top-bar ${mode}"
          :orientation mode
-         :space-evenly false
-      ; (greet)
+         :space-evenly true
       (workspaces :orient mode)
       )
     (box :valign "center"
          :halign "center"
-         :class "middle-bar"
+         :class "middle-bar ${mode}"
+         :space-evenly false
       (time :orient mode)
       )
-    (box :valign "end"
+    (box :valign "center"
          :halign "end"
-         :class "bottom-bar"
-      (ram :orient mode))
+         :class "bottom-bar ${mode}"
+         :space-evenly false
+      (ram :orient mode)
+      (battery :orient mode)
+      )
     ))
+
+(defwidget dash []
+    (box :valign "center"
+         :halign "start"
+         :class "dash_text"
+    (ram :orient "v")
+     )
+    )
 
 (defwidget time [orient]
   (box :class "time ${orient}" 
@@ -36,16 +47,33 @@
     ))
 
 (defwidget ram [orient]
-  (box :class "ram"
-    (label :angle {orient == "v" || orient == "horizontal" ? 90 : 0} :text "this is a status bar")))
+  (box :class "ram ${orient}"
+    (label :angle {orient == "v" || orient == "horizontal" ? 90 : 0} :markup "~εὐδαιμονία~")))
+
+(defwidget icon_tray [orient]
+    (box :class "icon_tray ${orient}"
+        (image :path "/home/rek/.config/eww/assets/blink.png" 
+                :image-width 40 
+                :image-height 40)
+    )
+)
+
+(defwidget battery [orient]
+  (box :class "battery ${orient}"
+       :tooltip "Battery"
+    (label :angle {orient == "v" || orient == "horizontal" ? 90 : 0} :markup "${"${battery_status}" == "1" ? "+" : "-"}${battery}" )))
 
 (defpoll time 
   :interval "5s"
   `date +'{"hour":"%H","min":"%M"}'`)
 
-; (defpoll hour :interval "1s" "date +%H")
-; (defpoll min  :interval "1s" "date +%M")
-; (defpoll sec  :interval "1s" "date +%S")
+(defpoll battery 
+  :interval "15s"
+  `cat /sys/class/power_supply/BAT0/capacity`)
+
+(defpoll battery_status 
+  :interval "5s"
+  `cat /sys/class/power_supply/AC/online`)
 
 (deflisten workspaces :initial "[]" "bash ~/.config/eww/scripts/get-workspaces")
 (deflisten current_workspace :initial "1" "bash ~/.config/eww/scripts/get-active-workspace")
@@ -58,9 +86,8 @@
       (for workspace in workspaces
         (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}"
           (box :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
-            ; (label :markup "${workspace.windows > 0 ? "◆" : "◇" }")
             (label :markup "${workspace.windows > 0 ? "${occupy}" : "${empty}"}")
-            
+           
             )
           )
         )
@@ -71,28 +98,48 @@
 
 (defwindow bar
   :monitor 0
-  :windowtype "dock"
   :geometry (geometry :x "5px"
     :y "0%"
     :height "98%"
     :width "10px"             
-    :windowtype "dock"
     :anchor "left center")      
   :exclusive true
   :focusable false
-  ; :reserve (struts :side "top" :distance "4%")   
+  :stacking "bottom"
   (bar_part :mode "v"))
 
 (defwindow bar2
   :monitor 0
-  :windowtype "dock"
   :geometry (geometry :y "5px"
     :x "0%"
     :width "98%"
     :height "10px"             
-    :windowtype "dock"
-    :anchor "top center")      
+    :anchor "bottom center")      
   :exclusive true
   :focusable false
-  :reserve (struts :side "top" :distance "4%")   
+  :stacking "bottom"
   (bar_part :mode "h"))
+
+(defwindow bar2-1
+  :monitor 1
+  :geometry (geometry :y "5px"
+    :x "0%"
+    :width "98%"
+    :height "10px"             
+    :anchor "bottom center")      
+  :exclusive true
+  :focusable false
+  :stacking "bottom"
+  (bar_part :mode "h"))
+
+(defwindow dashboard
+  :monitor 0
+  :geometry (geometry :y "5px"
+    :x "0%"
+    :width "98%"
+    :height "10px"             
+    :anchor "left center")      
+  :exclusive false
+  :focusable false
+  :stacking "bottom"
+  (dash))
