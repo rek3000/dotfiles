@@ -1,45 +1,44 @@
+//
+
+$fg-def: #EAE7B1;
+$bg-def: #3C6255; 
+$bd-def: #A6BB8D;
 
 * { 
-    all: unset;
-    color: #DDDDDD;
-    font-family: Inconsolata Nerd Font Mono 
+    margin: 0;
+    padding: 0;
+    color: $fg-def; 
 }
 
+
+
 window {
-    margin: 1px 1px;
-    border: 0px solid skyblue;
-    & > * {
-        margin: 0px;
-        padding: 0px;
-    }
     font-size: 12px;
+    font-family: Inconsolata Nerd Font Mono; 
+    // font-family: Gohu GohuFont;
+    // border: 3px solid skyblue;
+    background-color: transparent;
 }
 
 .bar_part {
+    margin: 5px 5px;
+    background-color: rgba($bg-def, 0.4);
+}
+.bar_part > * {
+    border: 3px solid $bd-def;
+    // border-radius: 8px;
+    // border-width: 0;
+    // padding: 2px 5px;
 }
 
-.top-bar.h{
-//    background: 9% 92%  no-repeat url("assets/glass.png") ;
-    padding: 2px 5px;
-    border-radius: 8px;
-    border: 3px double #b3ffae;
-}
-
-.middle-bar.h{
-    padding: 2px 5px;
-    border-radius: 8px;
-//    background: 9% 92%  no-repeat url("assets/glass.png") ;
-    border: 3px double #b3ffae;
-
-}
-
+.top-bar.h,
+.middle-bar.h,
 .bottom-bar.h{
-//    background: 9% 92%  no-repeat url("assets/glass.png") ;
-    border-radius: 8px;
-    padding: 2px 5px;
-    border: 3px double #b3ffae;
 }
 
+.middle-bar.h {
+
+}
 .top-bar.v{
     //	margin-top: 10px;
 }
@@ -54,8 +53,9 @@ window {
 //	margin-bottom: 10px;
 
 .ram.h {
-    font-size: .9rem;
-    font-style: italic;
+    // font-family: Liberation Serif;
+    font-style: Italic;
+    font-size: 1.0em;
     padding: 0px 5px;
 }
 
@@ -70,55 +70,52 @@ window {
 }
 
 .time.h {
-    padding: 0px 4px; 
-    font-size: 1.2rem;
+    font-size: 1.2em;
+    font-family: Gohu GohuFont;
     font-weight: bold;
     font-style: normal;
-    border-radius: 8px;
+    padding: 0 0.3rem;
 }
 
 .time.h label {
-    color: lightgreen;
+    color: darksalmon;
 }
 
 .time.v {
     padding: 8px 0px; 
-    font-size: 1.3rem;
+    font-size: 1.3em;
     background-color: #658864;
     border-radius: 8px;
 }
 
 
 .workspace-entry  {
-    font-size: 1.3rem;
-    padding: 0px 4px;
+    font-size: 1.2em;
+    padding: 0px 0.3rem;
 }
 
 .workspace-entry label {
-    color: lightblue;
+    // color: lightblue;
 }
 
 .workspace-entry.current{
-    font-size: 1.5rem;
+    font-size: 1.3em;
     background-color: #658864;
-    border-radius: 8px;
-}
-
-.icon_tray.h > image {
-//    margin: 2px 2px;
-//    border: 2px solid teal;
-    border-radius: 0px;
 }
 
 .battery.h {
-    font-size: 1.3rem;
-    background: teal;
-    border-radius: 8px;
+    font-family: Gohu GohuFont;
+    font-size: 1.3em;
+    font-weight: bolder;
+    background-color: darkslategrey;
     padding: 0px 5px;
 }
 
 .battery.h label {
-    color: lightgreen;
+    color: darksalmon;
 }
 
+.battery.h tooltip {
+    border: 2px solid green;
+}
 
