@@ -1,9 +1,12 @@
 #!/bin/sh
 
 # this allow to store command with parameter
-bemen=("bemenu" "-i" "-l" "12" "--scrollbar" "autohide" "--cw" "10" "-H" "30" "-B" "5" "-M" "500" "-c" "--bdr" "#3A8891" "--hf" "#3A8891" "--tf" "#3A8891" "--scf" "#3A8891" "--fn" "'Inconsolata Nerd Font 15px'")
+# bemen=("bemenu" "-i" "-l" "12" "--scrollbar" "autohide" "--cw" "10" "-H" "30" "-B" "5" "-M" "500" "-c" "--bdr" "#3A8891" "--hf" "#3A8891" "--tf" "#3A8891" "--scf" "#3A8891" "--fn" "'Inconsolata Nerd Font 15px'")
 
-menu="${bemen[@]}"
+
+dme=("dmenu -l 12 -fn HurmitNerdFont:size=11 -nb #222222 -nf #bbbbbb -sb #96C291 -sf #eeeeee")
+menu="${dme[@]}"
+# menu="${bemen[@]}"
 
 pidof systemd && sys=systemctl || sys=loginctl
 
