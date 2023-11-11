@@ -24,27 +24,26 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import os
+import subprocess
+
+from libqtile import qtile
+from libqtile import hook
 from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
-import os
-import subprocess
-from libqtile import hook
-
-@hook.subscribe.startup_once
-def autostart():
-    home = os.path.expanduser('~')
-    subprocess.Popen([home + '/.config/qtile/autostart.sh'])
-
 mod = "mod4"
-#terminal = guess_terminal()
+terminal = guess_terminal()
 
-terminal = "alacritty"
+# if qtile.core.name == "x11":
+    # tray = widget.Systray()
+# elif qtile.core.name == "wayland":
+    # tray = widget.StatusNotifier()
+tray = widget.Systray()
+
 keys = [
-    # A list of available commands that can be bound to keys can be found
-    # at https://docs.qtile.org/en/latest/manual/config/lazy.html
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
@@ -53,14 +52,23 @@ keys = [
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
+    Key(
+        [mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"
+    ),
+    Key(
+        [mod, "shift"],
+        "l",
+        lazy.layout.shuffle_right(),
+        desc="Move window to the right",
+    ),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
     Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
-    Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
+    Key(
+        [mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"
+    ),
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
@@ -76,66 +84,86 @@ keys = [
     ),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     # Toggle between different layouts as defined below
+    Key([mod], "period", lazy.next_screen(), desc="Next monitor"),
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod, "shift"], "w", lazy.window.kill(), desc="Kill focused window"),
-    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key([mod], "f",
+    Key([mod, "shift"], "c", lazy.window.kill(), desc="Kill focused window"),
+    Key(
+        [mod],
+        "f",
+        lazy.window.toggle_fullscreen(),
+        desc="Toggle fullscreen on the focused window",
+    ),
+    Key(
+        [mod],
+        "v",
         lazy.window.toggle_floating(),
-        desc="Toggle floating",
-        ),
-
-
+        desc="Toggle floating on the focused window",
+    ),
+    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
+    # Key([mod, "control"], "m", lazy.shutdown(), desc="Shutdown Qtile"),
+    Key([mod, "control"], "q", lazy.spawn("power_option"), desc="Shutdown Qtile"),
+    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     # audio control
-    Key([],"XF86AudioRaiseVolume", 
-        lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +2%"),
-        desc="Increase volume"),
-    Key([],"XF86AudioLowerVolume",
-        lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -2%"),
-        desc="Decrease volume"),
-    Key([],"XF86AudioMute",
-        lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"),
-        desc="Decrease volume"),
-    Key([mod], "F9", lazy.spawn("/home/rek/Apps/saudio")),
 
+    Key(
+        [],
+        "XF86AudioRaiseVolume",
+        lazy.spawn("volume.sh up"),
+        desc="Increase volume",
+    ),
+    Key(
+        [],
+        "XF86AudioLowerVolume",
+        lazy.spawn("volume.sh down"),
+        desc="Decrease volume",
+    ),
+    Key(
+        [],
+        "XF86AudioMute",
+        lazy.spawn("volume.sh mute"),
+        desc="Decrease volume",
+    ),
+
+    Key([mod], "F9", lazy.spawn("/home/rek/.local/bin/saudio")),
     # backlight control
-    Key([], "XF86MonBrightnessUp", 
-        lazy.spawn("light -A 10"), 
-        desc="Increase brightness"),
-    Key([], "XF86MonBrightnessDown", 
+    Key(
+        [], "XF86MonBrightnessUp", lazy.spawn("light -A 10"), desc="Increase brightness"
+    ),
+    Key(
+        [],
+        "XF86MonBrightnessDown",
         lazy.spawn("light -U 10"),
-        desc="Decrease brightness"),
+        desc="Decrease brightness",
+    ),
     Key([mod], "F11", lazy.spawn("light -U 10"), desc=""),
     Key([mod], "F12", lazy.spawn("light -A 10"), desc=""),
-
-    Key([], "Print",
-        lazy.spawn("screen"),
-        desc="Print Screen"),
-    Key(["shift"], "Print",
-        lazy.spawn("screensel"),
-        desc="Print selected Screen"),
-
-
+    Key([], "Print", lazy.spawn("screen"), desc="Print Screen"),
+    Key(["shift"], "Print", lazy.spawn("screensel"), desc="Print selected Screen"),
 ]
 
-groups = [Group(i) for i in "123456789"]
+group_names = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"]
+groups = [Group(i) for i in group_names]
+# groups = [Group(i) for i in "123456789"]
 
 for i in groups:
+    # grab the key according to that group
+    group_key = groups.index(i) + 1
     keys.extend(
         [
             # mod1 + letter of group = switch to group
             Key(
                 [mod],
-                i.name,
+                # i.name,
+                str(group_key),
                 lazy.group[i.name].toscreen(),
                 desc="Switch to group {}".format(i.name),
             ),
             # mod1 + shift + letter of group = switch to & move focused window to group
             Key(
                 [mod, "shift"],
-                i.name,
-                lazy.window.togroup(i.name, switch_group=True),
+                # i.name,
+                str(group_key),
+                lazy.window.togroup(i.name, switch_group=False),
                 desc="Switch to & move focused window to group {}".format(i.name),
             ),
             # Or, use below if you prefer not to switch to that group.
@@ -145,30 +173,14 @@ for i in groups:
         ]
     )
 
+
 layouts = [
-    #layout.Tile(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"],
-                   border_width=5,
-                   border_focus="#68b984",
-                   border_normal="#3d5656",
-                   margin=3,
-                   border_on_single=True),
-    #layout.Max(margin=3),
-    layout.Floating(
-        float_rules=[
-            # Run the utility of `xprop` to see the wm class and name of an X client.
-            *layout.Floating.default_float_rules,
-            Match(wm_class="confirmreset"),  # gitk
-            Match(wm_class="makebranch"),  # gitk
-            Match(wm_class="maketag"),  # gitk
-            Match(wm_class="ssh-askpass"),  # ssh-askpass
-            Match(title="branchdialog"),  # gitk
-            Match(title="pinentry"),  # GPG key password entry
-        ],
-        border_width=5,
-        border_focus="#68b984",
-        border_normal="#3d5656",
-    ),
+    layout.Columns(border_on_single=True, 
+                   border_focus="#d75f5f",
+                   margin_on_single=6,
+                   border_focus_stack=["#d75f5f", "#8f3d3d"],
+                   border_width=4, margin=2),
+    layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -176,63 +188,129 @@ layouts = [
     # layout.MonadTall(),
     # layout.MonadWide(),
     # layout.RatioTile(),
+    # layout.Tile(),
     # layout.TreeTab(),
     # layout.VerticalTile(),
     # layout.Zoomy(),
 ]
 
 widget_defaults = dict(
-    #font="agave Nerd Font",
-    font="Pixel Operator Mono",
-    fontsize=18,
-    padding=4,
+    font="GohuFont 14 Nerd Font Mono",
+    fontsize=14,
+    padding=3,
 )
 extension_defaults = widget_defaults.copy()
 
+
+left = Screen(
+    bottom=bar.Bar(
+        [
+            widget.Battery(battery="BAT0"),
+            widget.WindowName(),
+            widget.TextBox("memento mori", foreground="#d75f3f", name="default"),
+            widget.CryptoTicker(
+                format="<span font-weight='bold'>{crypto}</span>:{amount:,.2f}",
+                crypto="NEO", 
+                currency='USDT', 
+                foreground="#bfea2a",
+                api="binance"),
+            widget.Sep(),
+            widget.CryptoTicker(
+                format="<span font-weight='bold'>{crypto}</span>:{amount:,.2f}",
+                crypto="GAS",
+                currency='USDT',
+                foreground="#bfea2a",
+                api="binance"),
+            widget.Sep(),
+            widget.CryptoTicker(
+                format="<span font-weight='bold'>{crypto}</span>:{amount:,.2f}",
+                crypto="FIRO",
+                foreground="#bfea2a",
+                ),
+            widget.CryptoTicker(crypto="FIRO", foreground="#bfea2a", api="coinbase"),
+            widget.CurrentScreen(),
+        ],
+        24,
+    ),
+)
 screens = [
     Screen(
         bottom=bar.Bar(
             [
-                widget.GroupBox(highlight_method="block",
-                                borderwidth=0,
-                                this_current_screen_border="#68B984"),
-                widget.CurrentLayout(background="#68b984"),
-                widget.Prompt(background="#DBA39A"),
-                widget.WindowName(max_chars=70,
-                                  padding=20),
+                widget.GroupBox(),
+                widget.CurrentLayoutIcon(),
+                widget.Prompt(prompt="rek: "),
+                widget.WindowName(max_chars=80),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.WidgetBox(widgets=[
-                                     widget.TextBox(text="I'm lazy",
-                                                    fontshadow="#285430",
-                                                    background="#68B984"),
-                                     # widget.Systray(background="#68B984")
-                                 ],
-                                 background="#3D5656",
-                                 ),
-
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                widget.Battery(background="#68B984",
-                               fontshadow="#285430",
-                               fontsize=widget_defaults.get("fontsize")+2),
-                #widget.QuickExit(),
+                # widget.Sep(),
+                widget.WidgetBox(
+                    widgets=[
+                        widget.Sep(),
+                        widget.CryptoTicker(
+                            format="<span font-weight='bold'>{crypto}</span>:{amount:,.2f}",
+                                            crypto="NEO", 
+                                            currency='USDT', 
+                                            foreground="#bfea2a",
+                                            api="binance"),
+                        widget.Sep(),
+                        widget.CryptoTicker(
+                            format="<span font-weight='bold'>{crypto}</span>:{amount:,.2f}",
+                                            crypto="GAS",
+                                            currency='USDT',
+                                            foreground="#bfea2a",
+                                            api="binance"),
+                        widget.Sep(),
+                        widget.CryptoTicker(
+                            format="<span font-weight='bold'>{crypto}</span>:{amount:,.2f}",
+                            crypto="FIRO",
+                            foreground="#bfea2a",
+                        ),
+                    ]
+                ),
+                # widget.Sep(),
+                widget.TextBox(
+                    "<span font-style='italic'>memento mori</span>",
+                    foreground="#d75f3f",
+                    name="default",
+                    ),
+                widget.Sep(),
+                widget.Battery(battery="BAT0"),
+                widget.Sep(),
+                widget.Clock(format="%I:%M %p"),
+                # widget.StatusNotifier(),
+                tray,
             ],
-            25,
-            background="#222222",
+            24,
+            # background="#000000AA",
+            # background="#000000FA",
+            opacity=0.6,
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
+        # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
+        # By default we handle these events delayed to already improve performance, however your system might still be struggling
+        # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
+        # x11_drag_polling_rate = 60,
     ),
+    left,
 ]
 
 # Drag floating layouts.
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+    Drag(
+        [mod],
+        "Button1",
+        lazy.window.set_position_floating(),
+        start=lazy.window.get_position(),
+    ),
+    Drag(
+        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
+    ),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
@@ -240,8 +318,13 @@ dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
 follow_mouse_focus = True
 bring_front_click = False
+floats_kept_above = True
 cursor_warp = False
+
 floating_layout = layout.Floating(
+    border_width=4,
+    border_focus="#d75f5f",
+    border_normal="#000000",
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
@@ -252,9 +335,6 @@ floating_layout = layout.Floating(
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
     ],
-    border_width=5,
-    border_focus="#68b984",
-    border_normal="#3d5656",
 )
 auto_fullscreen = True
 focus_on_window_activation = "smart"
@@ -278,3 +358,7 @@ wl_input_rules = None
 wmname = "LG3D"
 
 
+@hook.subscribe.startup_once
+def autostart():
+    home = os.path.expanduser("~/.config/qtile/autostart")
+    subprocess.Popen([home])

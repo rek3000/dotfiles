@@ -1,0 +1,13 @@
+#!/bin/sh
+pipewire &
+pkill kickstart
+kickstart &
+dunst &
+
+bash ~/.screenlayout/rek.sh
+if [[ $XDG_SESSION_TYPE = "wayland" ]]; then
+    xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
+    swaybg -i Pictures/mount1.jpg -m fill
+else 
+    ~/.fehbg
+fi
