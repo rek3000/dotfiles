@@ -1,0 +1,25 @@
+#!/bin/sh
+
+dme=("dmenu -l 12 -fn HurmitNerdFont:size=11 -nb #222222 -nf #bbbbbb -sb #96C291 -sf #eeeeee")
+menu="${dme[@]}"
+
+selection="$(echo -e "Extend Left\nExtend Right\nMirror\nExtra" | $menu -i -p Power: -l 4)"
+
+
+case $selection in
+    "Extend Left")
+        xrandr --output eDP-1 --primary --mode 1366x768 --pos 1920x0 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal
+        ;;
+    "Extend Right")
+        xrandr --output eDP-1 --primary --mode 1366x768 --pos 904x1275 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 2270x1275 --rotate normal
+        ;;
+    "Mirror")
+        xrandr --output eDP-1 --primary --mode 1366x768 --pos 0x0 --rotate normal --output HDMI-1 --mode 1360x768 --pos 0x0 --rotate normal
+        ;;
+    "Extra")
+        xrandr --output eDP-1 --off --output HDMI-1 --mode 1360x768 --pos 0x0 --rotate normal
+        ;;
+    *) echo "nah"
+        ;;
+esac
+
