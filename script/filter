@@ -1,0 +1,11 @@
+#!/bin/sh
+TOGGLE=/tmp/.toggle
+program=gammastep
+if [ ! -e $TOGGLE ]; then
+    touch $TOGGLE
+    $program -P -O 4500:4500 
+elif [ -e $TOGGLE ]; then 
+  rm $TOGGLE
+  $program -x
+  $program -O 6500
+fi

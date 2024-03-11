@@ -1,0 +1,59 @@
+#!/bin/sh
+
+function drawstatus() {
+  while true
+  do
+    # TOP BAR
+    # rec="^c#96C291^^r0,0,18,18^^f20^^c#FFFFFF^^b#f7a8b8^"
+    date=$(date '+%H:%M')
+    date="<span baseline_shift='5pt' weight='bold' foreground='#FFF5E0' background='#186F65'>$date</span>"
+    # date="<span baseline_shift='1pt' weight='bold' foreground='#FFF5E0'>$date</span>"
+    # date="<span weight='bold' foreground='#FFF5E0'>$date</span>"
+    top="$date"
+    #####
+
+  # BOTTOM BAR
+  ## LEFT 
+  # batstart="<span foreground='#444444' background='#96C291' style='normal'>[</span>"
+  # batend="<span foreground='#444444' background='#96C291' style='normal'>]</span>"
+  batcap=$(cat /sys/class/power_supply/BAT0/capacity)
+  batstat=$(cat /sys/class/power_supply/BAT0/status)
+  if [[ $batstat = "Charging" ]]
+  then
+    batstat="+"  
+  elif [[ $batstat = "Full" ]]
+  then
+    batstat="="
+  else
+    batstat="-"
+  fi
+  if [[ $batcap -gt 30 ]]; then
+    batcap="<span weight='bold' background='green'>$batcap</span>"
+  else
+    batcap="<span weight='bold' background='crimson'>$batcap</span>"
+  fi
+  batstat="<span size='80%' weight='bold' rise='1pt' background='teal'>$batstat</span>"
+  bat="$batstart$batcap$batstat$batend"
+
+  bottomleft=$bat
+  ##
+  ## RIGHT
+  # icon='☕'
+  text="<span size='100%'>$icon</span> <span color='coral' size='100%' style='italic'>memento mori</span>"
+  text=$text$coin
+  # neolabel="NEO:"
+  # neoprice="$(curl -X GET  "https://api2.binance.com/api/v3/ticker/price?symbol=NEOUSDT" | jq  --raw-output '.price')"
+  # neo=$neolabel$neoprice
+  # firolabel="FIRO:"
+  # firoprice="$(curl -X GET  "https://api2.binance.com/api/v3/ticker/price?symbol=FIROUSDT" | jq  --raw-output '.price')"
+  # firo=$firolabel$firoprice
+  bottomright="$neo $firo $text$debug"
+  ##
+  #####
+
+  xsetroot -name "$top|$bottomleft|$bottomright"
+  sleep 30
+done 
+}
+
+drawstatus &

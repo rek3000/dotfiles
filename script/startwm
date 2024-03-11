@@ -1,0 +1,43 @@
+#!/bin/sh
+
+display_menu() {
+  echo "Launch: "
+  echo "[1]. DWM"
+  echo "[2]. Qtile"
+  echo "[3]. Plasma"
+  echo "[4]. Hyprland"
+  echo "[5]. Plasma-Wayland"
+  echo "[6]. Qtile-Wayland"
+  echo -n "> "
+}
+handle_choice() {
+  read choice
+  case $choice in
+    1)
+      exec startx /home/rek/.local/share/sessions/xinit/dwm-xinit
+      ;;
+    2)
+      exec startx /home/rek/.local/share/sessions/xinit/qtile-xinit
+      ;;
+    3)
+      exec startx /home/rek/.local/share/sessions/xinit/plasma-xinit
+      ;;
+    4)
+      exec ~/.local/bin/wrapphyprland
+      ;;
+    5)
+      exec /home/rek/.local/share/sessions/wayland/plasma-wayland
+      ;;
+    6)
+      exec /home/rek/.local/share/sessions/wayland/qtile-wayland
+      ;;
+    *)
+      # startx /home/rek/.local/share/xinit/dwm-xinit
+      ;;
+  esac
+}
+
+display_menu
+handle_choice
+
+
